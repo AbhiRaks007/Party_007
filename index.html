@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Birthday Party</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Teko', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invitation-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            border: 3px solid #ff00ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
+                        0 0 40px rgba(255, 0, 255, 0.3),
+                        inset 0 0 10px rgba(255, 0, 255, 0.3);
+            background: rgba(10, 10, 20, 0.8);
+            overflow: hidden;
+            animation: pulseBorder 4s infinite alternate;
+        }
+
+        @keyframes pulseBorder {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
+                            0 0 40px rgba(255, 0, 255, 0.3),
+                            inset 0 0 10px rgba(255, 0, 255, 0.3);
+                border-color: #ff00ff;
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 255, 255, 0.5),
+                            0 0 50px rgba(0, 255, 255, 0.3),
+                            inset 0 0 15px rgba(0, 255, 255, 0.3);
+                border-color: #00ffff;
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(255, 255, 0, 0.5),
+                            0 0 40px rgba(255, 255, 0, 0.3),
+                            inset 0 0 10px rgba(255, 255, 0, 0.3);
+                border-color: #ffff00;
+            }
+        }
+
+        .neon-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            text-align: center;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 0 0 10px #ff00ff,
+                         0 0 20px #ff00ff,
+                         0 0 30px #ff00ff;
+            animation: flicker 3s infinite alternate;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px #ff00ff,
+                             0 0 20px #ff00ff,
+                             0 0 30px #ff00ff,
+                             0 0 40px #ff00ff;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                color: #aaa;
+            }
+        }
+
+        .subtitle {
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            text-align: center;
+            margin-bottom: 25px;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            letter-spacing: 1px;
+            line-height: 1.3;
+        }
+
+        .details-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .detail-card {
+            flex: 1 1 250px;
+            min-width: 200px;
+            max-width: 100%;
+            background: rgba(20, 20, 30, 0.7);
+            border: 1px solid #00ffff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .detail-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: #ffff00;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+            border-bottom: 1px solid #ffff00;
+            padding-bottom: 3px;
+        }
+
+        .detail-content {
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            color: #fff;
+            line-height: 1.4;
+        }
+
+        .map-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            padding: 12px;
+            font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+            color: #00ffff;
+            text-decoration: none;
+            border: 2px solid #00ffff;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            word-break: break-word;
+        }
+
+        .map-link:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* RSVP Form Styles */
+        .rsvp-form {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(20, 20, 30, 0.9);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+
+        .rsvp-form.active {
+            display: block;
+        }
+
+        .form-title {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            color: #ffff00;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            background: rgba(10, 10, 20, 0.8);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Teko', sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+        }
+
+        .rsvp-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 25px auto;
+            padding: 12px;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Teko', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rsvp-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+        }
+
+        .rsvp-button:active {
+            transform: scale(0.95);
+        }
+
+        .rsvp-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.3) 0%,
+                rgba(255, 255, 255, 0) 60%
+            );
+            transform: rotate(30deg);
+            transition: all 0.3s;
+        }
+
+        .rsvp-button:hover::before {
+            animation: shine 1.5s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -50%;
+            }
+            100% {
+                left: 150%;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #f00;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.3;
+            animation: float linear infinite;
+            font-size: clamp(12px, 3vw, 24px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            background: rgba(0, 255, 255, 0.9);
+            color: #000;
+            padding: 12px 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            transform: translateY(-150%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* Specific mobile adjustments */
+        @media (max-width: 480px) {
+            .invitation-container {
+                padding: 15px;
+            }
+            
+            .neon-title {
+                letter-spacing: 2px;
+                margin-bottom: 10px;
+            }
+            
+            .detail-card {
+                flex: 1 1 100%;
+            }
+            
+            .map-link {
+                padding: 10px;
+                font-size: 1rem;
+            }
+            
+            .rsvp-button, .submit-btn {
+                padding: 10px;
+                font-size: 1.2rem;
+            }
+            
+            .rsvp-form {
+                padding: 15px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            /* Tablet specific adjustments */
+            .invitation-container {
+                max-width: 700px;
+            }
+            
+            .detail-card {
+                flex: 1 1 45%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    <div class="notification" id="notification"></div>
+    
+    <div class="invitation-container">
+        <h1 class="neon-title">Birthday Bash</h1>
+        <h2 class="subtitle">You're Invited to Celebrate With Me!</h2>
+        
+        <div class="details-section">
+            <div class="detail-card">
+                <h3 class="detail-title">Date</h3>
+                <p class="detail-content">Sunday,13th July
+            </div>
+            <div class="detail-card">
+                <h3 class="detail-title">Time</h3>
+                <p class="detail-content">12.30 PM Onwards</p>
+            </div>
+            <div class="detail-card">
+                <h3 class="detail-title">Venue</h3>
+                <p class="detail-content">The Rakshits' Residence</p>
+                <p class="detail-content">Belgharia.</p>
+            </div>
+        </div>
+        
+        <!-- Google Maps Link -->
+        <a href="https://www.google.com/maps/place/30%2F1B+Old+Nimta+Rd,+Belgharia,+Kolkata,+West+Bengal+700056/@22.6559831,88.3747443,17z/data=!3m1!4b1!4m6!3m5!1s0x39f89e2c5f1b7a0d:0x7b1a1a1a1a1a1a1a!8m2!3d22.6559831!4d88.3773192!16s%2Fg%2F11b8z8z8z8?entry=ttu" 
+           class="map-link" 
+           target="_blank">
+           📍 Click to View Location on Google Maps
+        </a>
+        
+        <!-- RSVP Form -->
+        <div class="rsvp-form" id="rsvpForm">
+            <h3 class="form-title">RSVP Confirmation</h3>
+            <form id="guestForm">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" id="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="form-label">WhatsApp Number</label>
+                    <input type="tel" id="phone" class="form-input" required placeholder="Include country code (e.g., +91)">
+                </div>
+                <button type="submit" class="submit-btn">Confirm via WhatsApp</button>
+            </form>
+        </div>
+        
+        <button class="rsvp-button" id="rsvpButton">RSVP Now</button>
+    </div>
+
+    <script>
+        // Create floating elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const shapes = ['★', '✦', '✧', '❂', '✺', '✹', '✷'];
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
+            
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                element.style.color = colors[Math.floor(Math.random() * colors.length)];
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100 + 100}%`;
+                element.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                element.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(element);
+            }
+        }
+
+        // Show notification
+        function showNotification(message, isSuccess = true) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.background = isSuccess 
+                ? 'rgba(0, 255, 255, 0.9)' 
+                : 'rgba(255, 0, 0, 0.9)';
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Toggle RSVP form
+        document.getElementById('rsvpButton').addEventListener('click', function() {
+            const form = document.getElementById('rsvpForm');
+            form.classList.toggle('active');
+            this.textContent = form.classList.contains('active') ? 'Close Form' : 'RSVP Now';
+            
+            // Create confetti when opening
+            if (form.classList.contains('active')) {
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+            }
+        });
+
+        // Form submission
+        document.getElementById('guestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            // Validate phone number (basic check for WhatsApp)
+            if (!phone) {
+                showNotification('Please enter your WhatsApp number', false);
+                return;
+            }
+            
+            // Format phone number (remove spaces and special chars except +)
+            const formattedPhone = phone.replace(/[^\d+]/g, '');
+            
+            // Create WhatsApp message
+            const message = `Hi Rakshita! This is ${name}. I'm coming to your birthday party! 🎉`;
+            
+            // Create WhatsApp link
+            const whatsappUrl = `https://wa.me/917439394544?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappUrl, '_blank');
+            
+            // Show success message
+            showNotification(`Thanks ${name}! Opening WhatsApp...`, true);
+            
+            // Reset form
+            this.reset();
+            document.getElementById('rsvpForm').classList.remove('active');
+            document.getElementById('rsvpButton').textContent = 'RSVP Now';
+            
+            // Create celebration confetti
+            for (let i = 0; i < 100; i++) {
+                createConfetti();
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0000', '#00ff00', '#0000ff'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.top = '-10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = `${Math.random() * 8 + 4}px`;
+            confetti.style.height = `${Math.random() * 8 + 4}px`;
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            document.body.appendChild(confetti);
+            
+            const animationDuration = Math.random() * 3 + 2;
+            
+            confetti.style.transition = `top ${animationDuration}s linear, transform ${animationDuration}s linear`;
+            
+            setTimeout(() => {
+                confetti.style.top = `${Math.random() * 100 + 100}vh`;
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            }, 10);
+            
+            setTimeout(() => {
+                document.body.removeChild(confetti);
+            }, animationDuration * 1000);
+        }
+
+        // Initialize everything when page loads
+        window.onload = function() {
+            createFloatingElements();
+        };
+    </script>
+</body>
+</html>
